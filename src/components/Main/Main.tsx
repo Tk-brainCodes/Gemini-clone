@@ -7,6 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { assets } from "./../../assets/index";
 import { static_data } from "../../data";
+import { Input } from "@/components/ui/input";
 
 const Main = () => {
   return (
@@ -31,7 +32,7 @@ const Main = () => {
       </div>
 
       <div className='w-full max-w-[950px] m-auto h-auto flex flex-col items-start justify-center'>
-        <span className='text-[56px] leading-[3.5rem] text-[#c4c7c5] font-medium p-[20px] mt-5 mb-0'>
+        <span className='text-[56px] leading-[3.5rem] text-[#c4c7c5] font-medium p-[20px] mt-5 mb-[40px]'>
           <p className='gradient-text'>Hello, Eboreime</p>
           <p>How can i help you today?</p>
         </span>
@@ -39,8 +40,8 @@ const Main = () => {
         <div className='grid-card-template'>
           {static_data.map(
             ({ prompt, icon }: { prompt: string; icon: string }) => (
-              <div className='h-[200px] p-[15px] bg-[#f0f4f9] rounded-[10px] relative cursor-pointer hover:bg-[#dfe4ed]'>
-                <p className='text-[#585858] text-[17px]'>{prompt}</p>
+              <div className='h-[200px] p-[15px] bg-[#f0f4f9] rounded-[13px] relative cursor-pointer hover:bg-[#dfe4ed]'>
+                <p className='text-black text-[17px]'>{prompt}</p>
                 <span>
                   <img
                     src={icon}
@@ -53,7 +54,36 @@ const Main = () => {
           )}
         </div>
 
-        <div className=''></div>
+        <div className='search-container  bg-white h-[100px] w-full bg-gradient-to-b from-transparent via-white to-white'>
+          <div className='search-box mt-4'>
+            <Input
+              type='text'
+              placeholder='Enter a text here'
+              className='flex-1 bg-transparent border-0 outline-0 focus:outline-0 p-[8px] text-[18px]'
+            />
+            <div className='flex gap-x-4'>
+              <img
+                src={assets.gallery_icon}
+                alt='gallery-icon'
+                className='w-[24px]'
+              />
+              <img src={assets.mic_icon} alt='mic-icon' className='w-[24px]' />
+              <img
+                src={assets.send_icon}
+                alt='send icon'
+                className='w-[24px]'
+              />
+            </div>
+          </div>
+
+          <p className='mx-auto my-15px text-[13px] text-center text-black font-normal mb-1'>
+            Gemini may display inaccurate info, including about people, so
+            double-check its responses.{" "}
+            <span className='underline cursor-pointer'>
+              Your privacy & Gemini Apps
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -88,4 +88,27 @@
     gap: 15px;
     padding: 20px;
   }
+
+  .search-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 950px;
+    padding: 0px 20px;
+    margin: auto;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: #f0f4f9;
+    padding: 10px 20px;
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+  }
 }
