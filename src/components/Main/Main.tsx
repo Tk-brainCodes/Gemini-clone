@@ -21,12 +21,12 @@ const Main = () => {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <div className='flex gap-x-2'>
+        <div className='flex gap-x-6'>
           <Button variant='outline'>Try Gemini Advanced</Button>
           <img
             src={assets.user_icon}
             alt='user-profile-icon'
-            className='w-[50px] h-[50px] rounded-full'
+            className='w-[40px] h-[40px] rounded-full'
           />
         </div>
       </div>
