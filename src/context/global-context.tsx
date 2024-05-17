@@ -11,7 +11,11 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const [resultData, setResultData] = useState("");
 
-  // const delayPara = (index: number, nextWord: string) => {};
+  const typingEffect = (index: number, nextWord: string) => {
+    setTimeout(function () {
+      setResultData((prev) => prev + (prev ? " " : "") + nextWord);
+    }, 75 * index);
+  };
 
   const onSent = async () => {
     setResultData("");
@@ -72,7 +76,7 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
           .replace(/&/g, "&amp;")
           .replace(/</g, "&lt;")
           .replace(/>/g, "&gt;");
-        return `<pre style="background-color: #f0f4f9; border-radius: 40px; max-height: 300px; width: 600px; padding: 20px; display: block; overflow-y: auto; overflow-x: auto;"><code class="${lang}" style="word-wrap: break-word;">${code}</code></pre><br>`;
+        return `<pre style="background-color: #f0f4f9; border-radius: 10px; max-height: 300px; width: 600px; padding: 20px; display: block; overflow-y: auto; overflow-x: auto;" class="no-scrollbar"><style>.no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }</style><code class="language-${lang}" style="word-wrap: break-word;" data-prismjs-copy="Copy">${code}</code></pre><br>`;
       }
     );
 
@@ -84,7 +88,18 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
       }
     );
 
-    setResultData(chatResponseWithLineBreaks);
+    // Replace inline code with <code> tags
+    const chatResponseWithInlineCode = chatResponseWithLineBreaks.replace(
+      /`([^`]+)`/g,
+      `<code style="padding: 2px; background-color:  #f0f4f9; text-align center; border-radius: 3px;">$1</code>`
+    );
+
+    const splitResultResponse = chatResponseWithInlineCode.split(" ");
+
+    for (let i = 0; i < splitResultResponse.length; i++) {
+      const nextWord = splitResultResponse[i];
+      typingEffect(i, nextWord + "");
+    }
 
     setLoading(false);
     setInput("");
