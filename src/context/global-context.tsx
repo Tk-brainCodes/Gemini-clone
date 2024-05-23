@@ -22,6 +22,7 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     setLoading(true);
     setShowResult(true);
     setRecentPrompt(input);
+    setPrevPrompts((prev) => [...prev, input]);
 
     const response = await runChat(input);
 
