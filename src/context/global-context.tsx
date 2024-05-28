@@ -1,30 +1,56 @@
 import { ReactNode, createContext, useState } from "react";
 import runChat from "@/config/gemini";
 
-export const Context = createContext({});
+interface ContextProps {
+  prevPrompts: string[];
+  setPrevPrompts: React.Dispatch<React.SetStateAction<string[]>>;
+  onSent: (prompt: string) => void;
+  setRecentPrompt: React.Dispatch<React.SetStateAction<string>>;
+  recentPrompt: string;
+  showResult: boolean;
+  loading: boolean;
+  resultData: string;
+  input: string;
+  setInput: React.Dispatch<React.SetStateAction<string>>;
+  newChatScreen: () => void;
+}
+
+export const Context = createContext<ContextProps | undefined>(undefined);
 
 const ContextProvider = ({ children }: { children: ReactNode }) => {
   const [input, setInput] = useState("");
   const [recentPrompt, setRecentPrompt] = useState("");
-  const [prevPrompts, setPrevPrompts] = useState([]);
+  const [prevPrompts, setPrevPrompts] = useState<string[]>([]);
   const [showResult, setShowResult] = useState(false);
   const [loading, setLoading] = useState(false);
   const [resultData, setResultData] = useState("");
 
   const typingEffect = (index: number, nextWord: string) => {
-    setTimeout(function () {
+    setTimeout(() => {
       setResultData((prev) => prev + (prev ? " " : "") + nextWord);
     }, 75 * index);
   };
 
-  const onSent = async () => {
+  const newChatScreen = () => {
+    setLoading(false);
+    setShowResult(false);
+  };
+
+  const onSent = async (prompt: string) => {
     setResultData("");
     setLoading(true);
     setShowResult(true);
-    setRecentPrompt(input);
-    setPrevPrompts((prev) => [...prev, input]);
 
-    const response = await runChat(input);
+    let response;
+
+    if (prompt !== undefined) {
+      response = await runChat(input);
+      setRecentPrompt(prompt);
+    } else {
+      setPrevPrompts((prev) => [...prev, input]);
+      setRecentPrompt(input);
+      response = await runChat(input);
+    }
 
     // Replace ** with <strong>
     const responseArray = response.split("**");
@@ -106,7 +132,7 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     setInput("");
   };
 
-  const contextValue = {
+  const contextValue: ContextProps = {
     prevPrompts,
     setPrevPrompts,
     onSent,
@@ -117,6 +143,7 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     resultData,
     input,
     setInput,
+    newChatScreen,
   };
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
