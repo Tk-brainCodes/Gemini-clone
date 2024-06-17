@@ -53,18 +53,29 @@ const Main = () => {
 
   return (
     <AnimatePresence>
-      <div className='flex-1 min-h-[100vh] pb-[15vh] relative'>
-        <div className='flex items-center justify-between px-4 py-2'>
+      <div className='flex-1 w-full bg-white max-h-40 min-h-[100vh] pb-[15vh] relative'>
+        <div className='mt-3 flex items-center justify-between px-4 py-2'>
           <DropdownMenu>
-            <DropdownMenuTrigger>Gemini</DropdownMenuTrigger>
+            <DropdownMenuTrigger className='text-[20px] leading-[28px] text-[#5f6368] flex items-center justify-center gap-x-2 '>
+              <span className=''>Gemini</span>{" "}
+              <img src={assets.arrow_dropdown} alt='arrow_dropdown' />
+            </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem>Gemini</DropdownMenuItem>
               <DropdownMenuItem>Gemini Advanced</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <div className='flex gap-x-6'>
-            <Button variant='outline'>Try Gemini Advanced</Button>
+          <div className='flex gap-x-4'>
+            <Button
+              variant='outline'
+              className='bg-[#dde3ea] text-[#000000] font-normal'
+            >
+              Try Gemini Advanced
+            </Button>
+            <Button className='bg-0 hover:bg-0 px-2 py-2 flex items-center justify-center'>
+              <img src={assets.google_apps} alt='google_apps' />
+            </Button>
             <img
               src={assets.user_icon}
               alt='user-profile-icon'
@@ -76,9 +87,9 @@ const Main = () => {
         <div className='w-full max-w-[950px] m-auto h-auto flex flex-col items-start justify-center'>
           {!showResult ? (
             <>
-              <span className='text-[56px] leading-[3.5rem] text-[#c4c7c5] font-medium p-[20px] mt-5 mb-[40px]'>
+              <span className='text-[56px] leading-[64px] text-[#c4c7c5] font-semibold p-[20px] mt-5 mb-[40px]'>
                 <p className='gradient-text'>Hello, Eboreime</p>
-                <p>How can I help you today?</p>
+                <p className='text-[#c4c7c5]'>How can I help you today?</p>
               </span>
               <div className='grid-card-template'>
                 {static_data.map(
@@ -91,12 +102,8 @@ const Main = () => {
                       <p className='text-black text-[17px] flex flex-col items-start '>
                         {prompt}
                       </p>
-                      <span>
-                        <img
-                          src={icon}
-                          alt=''
-                          className='w-[35px] p-[5px] absolute bg-white rounded-[20px] bottom-[10px] right-[10px]'
-                        />
+                      <span className='w-[40px] h-[40px] p-[5px] bg-white rounded-full flex items-center justify-center right-[10px] bottom-[10px] absolute'>
+                        <img src={icon} alt='' />
                       </span>
                     </div>
                   )
@@ -143,7 +150,7 @@ const Main = () => {
                 type='text'
                 placeholder='Enter a text here'
                 className='flex-1 bg-transparent border-1 border-blue-400 outline-none focus:outline-none focus:border-none focus:ring-0 p-[8px] text-[18px]'
-                value={input || cardPrompt}
+                value={input}
                 onKeyDown={handleKeyDown}
                 style={{ whiteSpace: "pre-wrap" }}
                 onChange={handleInputChange}
@@ -152,7 +159,7 @@ const Main = () => {
               <motion.div className='flex gap-x-4'>
                 <span className='rounded-full hover:bg-slate-200 px-2 py-2 flex items-center justify-center'>
                   <img
-                    src={assets.gallery_icon}
+                    src={assets.add_photo}
                     alt='gallery-icon'
                     className='w-[24px] cursor-pointer'
                   />
@@ -165,19 +172,18 @@ const Main = () => {
                     className='w-[24px] cursor-pointer'
                   />
                 </span>
-                {input ||
-                  (cardPrompt.length > 1 && (
-                    <motion.span
-                      className='rounded-full hover:bg-slate-200 px-2 py-2 flex items-center justify-center'
-                      onClick={() => onSent(input)}
-                    >
-                      <motion.img
-                        src={assets.send_icon}
-                        alt='send icon'
-                        className='w-[24px] cursor-pointer '
-                      />
-                    </motion.span>
-                  ))}
+                {input && (
+                  <motion.span
+                    className='rounded-full hover:bg-slate-200 px-2 py-2 flex items-center justify-center'
+                    onClick={() => onSent(input)}
+                  >
+                    <motion.img
+                      src={assets.send_icon}
+                      alt='send icon'
+                      className='w-[24px] cursor-pointer '
+                    />
+                  </motion.span>
+                )}
               </motion.div>
             </motion.div>
 

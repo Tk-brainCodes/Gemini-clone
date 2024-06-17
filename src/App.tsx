@@ -1,10 +1,10 @@
-import Sidebar from "./components/Sidebar/Sidebar";
-import Main from "./components/Main/Main";
+import Main from "@/components/Main/Main";
+import SidebarDrawer from "@/components/Sidebar/SidebarDrawer";
 
 function App() {
   return (
     <div className='flex'>
-      <Sidebar />
+      <SidebarDrawer />
       <Main />
     </div>
   );
